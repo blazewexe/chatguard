@@ -50,11 +50,20 @@ Lightweight chat moderation plugin for Paper/Purpur Minecraft servers.
 
 ## Building
 
-```
+```bash
 ./gradlew build
 ```
 
 Output: `build/libs/ChatGuard-1.0.0.jar`
+
+## Releases
+
+To automatically create a GitHub Release with the compiled JAR attached:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
 
 ---
 
