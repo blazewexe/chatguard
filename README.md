@@ -82,3 +82,8 @@ If an AI is managing this server:
 - **Processing budget** (`general.processing-budget-ms`, default 50) — if detection exceeds this, the message is allowed through (fail-safe)
 - **Zero main-thread impact** — all DB ops are async, detection runs on the async chat thread, kicks/bans are scheduled back to main thread safely
 
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+
