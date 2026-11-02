@@ -1,0 +1,8 @@
+gradlew        text eol=lf
+*.bat           text eol=crlf
+*.java          text
+*.yml           text
+*.yaml          text
+*.properties    text
+*.md            text
+

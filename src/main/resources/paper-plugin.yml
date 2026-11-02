@@ -1,0 +1,39 @@
+name: ChatGuard
+version: '1.0.0'
+main: dev.chatguard.ChatGuardPlugin
+api-version: '1.21'
+description: Lightweight advanced chat moderation for Paper/Purpur servers
+authors:
+  - ChatGuard
+permissions:
+  chatguard.bypass:
+    description: Bypass all chat detection
+    default: op
+  chatguard.staff.alerts:
+    description: Receive staff violation alerts
+    default: op
+  chatguard.admin.reload:
+    description: Reload ChatGuard configuration
+    default: op
+  chatguard.admin.test:
+    description: Test message detection
+    default: op
+  chatguard.admin.logs:
+    description: View violation logs
+    default: op
+  chatguard.admin.stats:
+    description: View plugin statistics
+    default: op
+  chatguard.admin.mute:
+    description: Mute players
+    default: op
+  chatguard.admin.unmute:
+    description: Unmute players
+    default: op
+  chatguard.admin.exempt:
+    description: Toggle player exemptions
+    default: op
+  chatguard.admin.clear:
+    description: Clear violation history
+    default: op
+

@@ -1,0 +1,127 @@
+# ============================================================
+# ChatGuard Configuration
+# ============================================================
+
+general:
+  # Prefix for plugin messages (MiniMessage format)
+  prefix: "<gradient:#ff6b6b:#ee5a24>ChatGuard</gradient> <dark_gray>»</dark_gray>"
+  # Max milliseconds per message for detection. Fail-safe if exceeded.
+  processing-budget-ms: 50
+  # Enable debug logging
+  debug: false
+
+# ------------------------------------------------------------
+# Advertising Detection
+# ------------------------------------------------------------
+advertising:
+  enabled: true
+  # Score thresholds (0.0 - 1.0). Higher = stricter.
+  ip-threshold: 0.7
+  domain-threshold: 0.6
+  discord-threshold: 0.8
+  # Domains that will never trigger advertising detection
+  whitelisted-domains:
+    - "minecraft.net"
+    - "mojang.com"
+    - "youtube.com"
+    - "youtu.be"
+    - "imgur.com"
+    - "twitch.tv"
+    - "github.com"
+    - "reddit.com"
+    - "twitter.com"
+    - "x.com"
+  # Discord invite codes that are allowed
+  whitelisted-discord-invites: []
+
+# ------------------------------------------------------------
+# Spam Detection
+# ------------------------------------------------------------
+spam:
+  enabled: true
+  # Max duplicate/similar messages allowed in the time window
+  duplicate-threshold: 3
+  # Time window for duplicate detection (seconds)
+  duplicate-window-seconds: 30
+  # Minimum seconds between messages (flood protection)
+  cooldown-seconds: 1.5
+  # Max messages in rate limit window
+  rate-limit-count: 5
+  # Rate limit window (seconds)
+  rate-limit-window-seconds: 10
+  # How similar two messages must be to count as duplicate (0.0 - 1.0)
+  similarity-threshold: 0.85
+  # Uppercase percentage to flag as caps abuse
+  caps-percentage: 70
+  # Minimum message length before caps check applies
+  caps-min-length: 6
+
+# ------------------------------------------------------------
+# Toxicity Detection
+# ------------------------------------------------------------
+toxicity:
+  enabled: true
+  # Blocked words (matched after normalization, case-insensitive)
+  blocked-words:
+    - "example_slur_1"
+    - "example_slur_2"
+  # Regex patterns for advanced matching (applied to normalized text)
+  blocked-patterns: []
+  # Score threshold to trigger a violation (0.0 - 1.0)
+  threshold: 0.6
+
+# ------------------------------------------------------------
+# Punishment Escalation
+# Each violation type has an escalation chain.
+# Players progress through the chain on repeated offenses.
+# ------------------------------------------------------------
+punishments:
+  advertising:
+    - action: WARN
+      message: "<red>Advertising is not allowed on this server."
+    - action: MUTE
+      duration-minutes: 10
+      message: "<red>You have been muted for 10 minutes for advertising."
+    - action: KICK
+      message: "<red>Kicked for repeated advertising."
+    - action: BAN
+      duration-minutes: 1440
+      message: "<red>Banned for 24 hours for persistent advertising."
+  spam:
+    - action: WARN
+      message: "<red>Please slow down in chat."
+    - action: MUTE
+      duration-minutes: 5
+      message: "<red>You have been muted for 5 minutes for spamming."
+    - action: KICK
+      message: "<red>Kicked for spam."
+  toxicity:
+    - action: WARN
+      message: "<red>Watch your language."
+    - action: MUTE
+      duration-minutes: 15
+      message: "<red>Muted for 15 minutes for toxic language."
+    - action: KICK
+      message: "<red>Kicked for toxic behavior."
+    - action: BAN
+      duration-minutes: 4320
+      message: "<red>Banned for 3 days for persistent toxicity."
+
+# ------------------------------------------------------------
+# Staff Alerts
+# ------------------------------------------------------------
+staff:
+  # Permission required to receive alerts
+  alert-permission: "chatguard.staff.alerts"
+  # Alert format (MiniMessage). Placeholders: <player>, <type>, <score>
+  alert-format: "<gray>[<gradient:#ff6b6b:#ee5a24>CG</gradient>]</gray> <white><player></white> <dark_gray>»</dark_gray> <red><type></red> <gray>(<score>)</gray>"
+
+# ------------------------------------------------------------
+# Database
+# ------------------------------------------------------------
+database:
+  # SQLite file (relative to plugin data folder)
+  file: "chatguard.db"
+  # Max pending async writes before dropping (backpressure)
+  max-queue-size: 1000
+
