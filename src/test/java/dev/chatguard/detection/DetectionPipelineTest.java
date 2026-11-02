@@ -39,3 +39,4 @@ class DetectionPipelineTest {
         assertTrue(results.stream().anyMatch(DetectionResult::violated));
     }
 }
+

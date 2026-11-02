@@ -70,3 +70,4 @@ class DatabaseManagerTest {
         assertTrue(afterClear.isEmpty());
     }
 }
+

@@ -49,3 +49,4 @@ class ViolationTrackerTest {
         assertEquals(1, tracker.getLevel(player2, ViolationType.TOXICITY));
     }
 }
+

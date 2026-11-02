@@ -41,3 +41,4 @@ class MuteManagerTest {
         assertFalse(muteManager.isMuted(playerId));
     }
 }
+

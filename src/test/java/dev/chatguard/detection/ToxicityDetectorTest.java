@@ -67,3 +67,4 @@ class ToxicityDetectorTest {
         assertTrue(result.score() > 0.0);
     }
 }
+

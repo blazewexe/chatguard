@@ -68,3 +68,4 @@ class SpamDetectorTest {
         assertEquals(ViolationType.SPAM, result3.type());
     }
 }
+

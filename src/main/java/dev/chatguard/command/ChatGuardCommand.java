@@ -304,3 +304,4 @@ public class ChatGuardCommand {
         return Command.SINGLE_SUCCESS;
     }
 }
+

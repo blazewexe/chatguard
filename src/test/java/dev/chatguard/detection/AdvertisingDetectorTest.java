@@ -80,3 +80,4 @@ class AdvertisingDetectorTest {
         assertFalse(result.violated());
     }
 }
+
