@@ -70,11 +70,12 @@ public class ConfigManager {
         ChatGuardConfig.AdvertisingConfig advertising = parseAdvertising(yaml.getConfigurationSection("advertising"));
         ChatGuardConfig.SpamConfig spam = parseSpam(yaml.getConfigurationSection("spam"));
         ChatGuardConfig.ToxicityConfig toxicity = parseToxicity(yaml.getConfigurationSection("toxicity"));
+        ChatGuardConfig.PrivateMessagingConfig privateMessaging = parsePrivateMessaging(yaml.getConfigurationSection("private-messaging"));
         Map<ViolationType, List<PunishmentAction>> punishments = parsePunishments(yaml.getConfigurationSection("punishments"));
         ChatGuardConfig.StaffConfig staff = parseStaff(yaml.getConfigurationSection("staff"));
         ChatGuardConfig.DatabaseConfig database = parseDatabase(yaml.getConfigurationSection("database"));
 
-        return new ChatGuardConfig(general, advertising, spam, toxicity, punishments, staff, database);
+        return new ChatGuardConfig(general, advertising, spam, toxicity, privateMessaging, punishments, staff, database);
     }
 
     private ChatGuardConfig.GeneralConfig parseGeneral(ConfigurationSection section) {
@@ -148,6 +149,29 @@ public class ConfigManager {
 
         double threshold = section.getDouble("threshold", 0.6);
         return new ChatGuardConfig.ToxicityConfig(enabled, blockedWords, blockedPatterns, threshold);
+    }
+
+    private ChatGuardConfig.PrivateMessagingConfig parsePrivateMessaging(ConfigurationSection section) {
+        Set<String> defaultDirect = Set.of("msg", "tell", "w", "whisper", "m", "t", "pm", "emsg", "etell", "ewhisper", "epm");
+        Set<String> defaultReply = Set.of("r", "reply", "er", "ereply");
+
+        if (section == null) {
+            return new ChatGuardConfig.PrivateMessagingConfig(true, defaultDirect, defaultReply);
+        }
+
+        boolean enabled = section.getBoolean("enabled", true);
+
+        List<String> directList = section.getStringList("direct-commands");
+        Set<String> directCommands = directList.isEmpty()
+                ? defaultDirect
+                : directList.stream().map(String::toLowerCase).collect(Collectors.toCollection(LinkedHashSet::new));
+
+        List<String> replyList = section.getStringList("reply-commands");
+        Set<String> replyCommands = replyList.isEmpty()
+                ? defaultReply
+                : replyList.stream().map(String::toLowerCase).collect(Collectors.toCollection(LinkedHashSet::new));
+
+        return new ChatGuardConfig.PrivateMessagingConfig(enabled, directCommands, replyCommands);
     }
 
     private Map<ViolationType, List<PunishmentAction>> parsePunishments(ConfigurationSection section) {

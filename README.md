@@ -21,7 +21,7 @@ Lightweight chat moderation plugin for Paper/Purpur Minecraft servers.
 
 ## Installation
 
-1. Download `ChatGuard-1.0.0.jar` from Releases
+1. Download `ChatGuard-1.2.0.jar` from Releases
 2. Drop into your server's `plugins/` folder
 3. Restart the server
 4. Edit `plugins/ChatGuard/config.yml`
@@ -40,6 +40,10 @@ Lightweight chat moderation plugin for Paper/Purpur Minecraft servers.
 | `/chatguard exempt <player>` | `chatguard.admin.exempt` | Toggle detection bypass |
 | `/chatguard clear <player>` | `chatguard.admin.clear` | Clear violation history |
 
+Private messages are moderated across the configured direct-message and reply command aliases
+(`msg`, `tell`, `w`, `whisper`, `r`, and others) by default. Configure these aliases or disable
+private-message moderation under `private-messaging` in `config.yml`.
+
 ## Permissions
 
 | Permission | Default | Description |
@@ -54,15 +58,15 @@ Lightweight chat moderation plugin for Paper/Purpur Minecraft servers.
 ./gradlew build
 ```
 
-Output: `build/libs/ChatGuard-1.0.0.jar`
+Output: `build/libs/ChatGuard-1.2.0.jar`
 
 ## Releases
 
 To automatically create a GitHub Release with the compiled JAR attached:
 
 ```bash
-git tag v1.0.0
-git push origin v1.0.0
+git tag v1.2.0
+git push origin v1.2.0
 ```
 
 ---
@@ -85,5 +89,4 @@ If an AI is managing this server:
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
 

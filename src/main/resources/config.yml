@@ -35,6 +35,32 @@ advertising:
   whitelisted-discord-invites: []
 
 # ------------------------------------------------------------
+# Private Messaging Moderation
+# Intercepts direct messages and whispers across all aliases
+# ------------------------------------------------------------
+private-messaging:
+  enabled: true
+  # Direct message commands that take <player> <message...>
+  direct-commands:
+    - "msg"
+    - "tell"
+    - "w"
+    - "whisper"
+    - "m"
+    - "t"
+    - "pm"
+    - "emsg"
+    - "etell"
+    - "ewhisper"
+    - "epm"
+  # Reply commands that take <message...> directly
+  reply-commands:
+    - "r"
+    - "reply"
+    - "er"
+    - "ereply"
+
+# ------------------------------------------------------------
 # Spam Detection
 # ------------------------------------------------------------
 spam:

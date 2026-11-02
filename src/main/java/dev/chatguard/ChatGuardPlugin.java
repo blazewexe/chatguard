@@ -10,6 +10,7 @@ import dev.chatguard.detection.DetectionPipeline;
 import dev.chatguard.detection.SpamDetector;
 import dev.chatguard.detection.ToxicityDetector;
 import dev.chatguard.listener.ChatListener;
+import dev.chatguard.listener.PrivateMessageListener;
 import dev.chatguard.punishment.MuteManager;
 import dev.chatguard.punishment.PunishmentManager;
 import dev.chatguard.punishment.ViolationTracker;
@@ -69,6 +70,7 @@ public final class ChatGuardPlugin extends JavaPlugin {
 
         // 5. Listeners
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
+        getServer().getPluginManager().registerEvents(new PrivateMessageListener(this), this);
 
         // 6. Commands (Paper lifecycle API)
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {

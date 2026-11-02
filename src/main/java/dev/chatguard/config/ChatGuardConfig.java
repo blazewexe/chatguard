@@ -17,6 +17,7 @@ public record ChatGuardConfig(
         AdvertisingConfig advertising,
         SpamConfig spam,
         ToxicityConfig toxicity,
+        PrivateMessagingConfig privateMessaging,
         Map<ViolationType, List<PunishmentAction>> punishments,
         StaffConfig staff,
         DatabaseConfig database
@@ -57,6 +58,13 @@ public record ChatGuardConfig(
             Set<String> blockedWords,
             List<Pattern> blockedPatterns,
             double threshold
+    ) {
+    }
+
+    public record PrivateMessagingConfig(
+            boolean enabled,
+            Set<String> directCommands,
+            Set<String> replyCommands
     ) {
     }
 

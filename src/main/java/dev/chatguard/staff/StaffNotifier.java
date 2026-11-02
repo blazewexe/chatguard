@@ -53,6 +53,17 @@ public class StaffNotifier {
      * @param result   the detection result containing type, score, and details
      */
     public void alertStaff(Player violator, DetectionResult result) {
+        alertStaff(violator, result, null);
+    }
+
+    /**
+     * Sends a violation alert to all online staff members with an optional communication channel.
+     *
+     * @param violator the player who triggered the violation
+     * @param result   the detection result containing type, score, and details
+     * @param channel  the channel where violation occurred (e.g. "Private Message") or null for default
+     */
+    public void alertStaff(Player violator, DetectionResult result, String channel) {
         ChatGuardConfig config = configSupplier.get();
         ChatGuardConfig.StaffConfig staffConfig = config.staff();
 
@@ -61,11 +72,15 @@ public class StaffNotifier {
 
         // Format score as percentage (e.g. 0.85 → "85%")
         String scoreFormatted = Math.round(result.score() * 100) + "%";
+        String typeDisplay = channel != null
+                ? result.type().displayName() + " (" + channel + ")"
+                : result.type().displayName();
 
         TagResolver resolvers = TagResolver.resolver(
                 Placeholder.unparsed("player", violator.getName()),
-                Placeholder.unparsed("type", result.type().displayName()),
-                Placeholder.unparsed("score", scoreFormatted)
+                Placeholder.unparsed("type", typeDisplay),
+                Placeholder.unparsed("score", scoreFormatted),
+                Placeholder.unparsed("channel", channel != null ? channel : "Chat")
         );
 
         Component alertComponent = miniMessage.deserialize(alertFormat, resolvers);

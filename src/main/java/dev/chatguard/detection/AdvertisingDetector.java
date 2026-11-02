@@ -84,12 +84,26 @@ public class AdvertisingDetector implements ChatDetector {
             return result;
         }
 
+        // Remove separators commonly inserted between characters while preserving
+        // dots, slashes, and colons that carry address structure.
+        result = scanMessage(removeObfuscatingSeparators(normalizedMessage), 0.8);
+        if (result.violated()) {
+            return result;
+        }
+
         result = scanMessage(strippedMessage, 0.65);
         if (result.violated()) {
             return result;
         }
 
         return DetectionResult.clean(ViolationType.ADVERTISING);
+    }
+
+    private String removeObfuscatingSeparators(String message) {
+        if (message == null || message.isEmpty()) {
+            return "";
+        }
+        return message.replaceAll("[\\s-]+", "");
     }
 
     /**
@@ -126,7 +140,7 @@ public class AdvertisingDetector implements ChatDetector {
             String domain = domainMatcher.group().toLowerCase();
             // Strip port if present
             String domainWithoutPort = domain.replaceAll(":\\d{2,5}$", "");
-            if (whitelistedDomains != null && whitelistedDomains.contains(domainWithoutPort)) {
+            if (isWhitelistedDomain(domainWithoutPort)) {
                 continue;
             }
             double score = confidence;
@@ -185,6 +199,15 @@ public class AdvertisingDetector implements ChatDetector {
         }
 
         return DetectionResult.clean(ViolationType.ADVERTISING);
+    }
+
+    private boolean isWhitelistedDomain(String domain) {
+        if (whitelistedDomains == null) {
+            return false;
+        }
+        return whitelistedDomains.stream()
+                .map(String::toLowerCase)
+                .anyMatch(allowed -> domain.equals(allowed) || domain.endsWith(allowed));
     }
 
     /**
